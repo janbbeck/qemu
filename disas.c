@@ -421,7 +421,7 @@ static bool cap_disas_monitor(disassemble_info *info, uint64_t pc, int count)
 #endif /* CONFIG_CAPSTONE */
 
 /* Disassemble this for me please... (debugging).  */
-void target_disas(FILE *out, CPUState *cpu, target_ulong code,
+void real_target_disas(FILE *out, CPUState *cpu, target_ulong code,
                   target_ulong size)
 {
     CPUClass *cc = CPU_GET_CLASS(cpu);
@@ -440,6 +440,7 @@ void target_disas(FILE *out, CPUState *cpu, target_ulong code,
     s.info.cap_mode = 0;
     s.info.cap_insn_unit = 4;
     s.info.cap_insn_split = 4;
+    s.info.disassembler_options = (char *)"intel";
 
 #ifdef TARGET_WORDS_BIGENDIAN
     s.info.endian = BFD_ENDIAN_BIG;
